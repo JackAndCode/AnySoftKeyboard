@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.3'
+        classpath 'com.android.tools.build:gradle:1.0.0-rc1'
         classpath 'org.robolectric:robolectric-gradle-plugin:0.13.2'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
     }
@@ -33,7 +33,7 @@ android {
     }
 
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion "21"
 
     defaultConfig {
         versionCode 127
@@ -85,15 +85,13 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            zipAlign true
 
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
 
         debug {
             signingConfig signingConfigs.release
-            zipAlign true
+
             debuggable true
         }
     }
