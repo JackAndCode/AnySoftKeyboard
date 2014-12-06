@@ -33,6 +33,7 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 import com.anysoftkeyboard.Configuration;
 import com.anysoftkeyboard.Configuration.AnimationsLevel;
+import com.anysoftkeyboard.OnKeyboardChangeListener;
 import com.anysoftkeyboard.api.KeyCodes;
 import com.anysoftkeyboard.keyboardextensions.KeyboardExtension;
 import com.anysoftkeyboard.keyboards.*;
@@ -160,6 +161,8 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
                 break;
             }
         }
+
+        mListener.onKeyboardChange(mSwitcher);
     }
 
     @Override
@@ -617,5 +620,15 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
         mPopOutStartPoint.y = mFirstTouchPont.y;
         // it is ok to wait for the next loop.
         postInvalidate();
+    }
+
+    OnKeyboardChangeListener mListener;
+
+    public OnKeyboardChangeListener getmListener() {
+        return mListener;
+    }
+
+    public void setmListener(OnKeyboardChangeListener mListener) {
+        this.mListener = mListener;
     }
 }

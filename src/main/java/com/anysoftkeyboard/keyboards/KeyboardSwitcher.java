@@ -19,6 +19,7 @@ package com.anysoftkeyboard.keyboards;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.inputmethod.EditorInfo;
+
 import com.anysoftkeyboard.AnySoftKeyboard;
 import com.anysoftkeyboard.api.KeyCodes;
 import com.anysoftkeyboard.keyboards.AnyKeyboard.HardKeyboardTranslator;
@@ -138,6 +139,7 @@ public class KeyboardSwitcher {
             return;
         }
         mInputView.setKeyboardSwitcher(this);
+        mInputView.setmListener(mIME);
         makeKeyboards(true);
     }
 
@@ -332,6 +334,8 @@ public class KeyboardSwitcher {
                 mInputView.setKeyboard(keyboard);
             }
         }
+
+
     }
 
     private int getKeyboardMode(EditorInfo attr) {
@@ -562,6 +566,7 @@ public class KeyboardSwitcher {
         // currentEditorInfo.inputType);
 
         // now show
+        // todo: @davidnuon add keyboard resolution here
         mIME.setKeyboardStuffBeforeSetToView(current);
         if (mInputView != null)
             mInputView.setKeyboard(current);

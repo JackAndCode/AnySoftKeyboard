@@ -114,7 +114,8 @@ import java.util.Map;
  */
 public class AnySoftKeyboard extends InputMethodService implements
         OnKeyboardActionListener, OnSharedPreferenceChangeListener,
-        AnyKeyboardContextProvider, SoundPreferencesChangedListener {
+        AnyKeyboardContextProvider, SoundPreferencesChangedListener,
+        OnKeyboardChangeListener {
 
     private final static String TAG = "ASK";
 
@@ -518,19 +519,6 @@ public class AnySoftKeyboard extends InputMethodService implements
         }
     }
 
-    Map<String, AnyKeyboard> mKeyActivityMap = new HashMap<>();
-    String mCurrentApp = "";
-    public void writeTask() {
-        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> list = activityManager.getRunningTasks(1);
-        String topLevelApp = list.get(0).baseActivity.getPackageName();
-        if(!topLevelApp.equals(mCurrentApp)) {
-            mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
-        }
-
-        mCurrentApp = topLevelApp;
-        Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
-    }
 
     @Override
     public void onStartInputView(final EditorInfo attribute,
@@ -3649,6 +3637,33 @@ public class AnySoftKeyboard extends InputMethodService implements
             setCandidatesView(onCreateCandidatesView());
             setCandidatesViewShown(false);
         }
+    }
+
+    private ActivityManager.RunningTaskInfo getTopActivity() {
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = activityManager.getRunningTasks(1);
+        return list.get(0);
+
+    }
+
+    Map<String, AnyKeyboard> mKeyActivityMap = new HashMap<>();
+    String mCurrentApp = "";
+    public void writeTask() {
+        String topLevelApp = getTopActivity().baseActivity.getPackageName();
+        if(!topLevelApp.equals(mCurrentApp)) {
+            mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+        }
+
+        mCurrentApp = topLevelApp;
+        Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
+    }
+
+    @Override
+    public void onKeyboardChange(KeyboardSwitcher switcher) {
+        Log.i(TAG + "FOOBAR", "Swtiching called");
+
+        String topLevelApp = getTopActivity().baseActivity.getPackageName();
+        mKeyActivityMap.put(topLevelApp, switcher.getCurrentKeyboard());
     }
 
 }
