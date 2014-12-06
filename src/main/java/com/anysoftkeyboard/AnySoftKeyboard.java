@@ -546,6 +546,11 @@ public class AnySoftKeyboard extends InputMethodService implements
         mCompletions = null;
         mCapsLock = false;
 
+        String topActivity = getTopActivity().baseActivity.getPackageName();
+        if(mKeyActivityMap.containsKey(topActivity)) {
+            mKeyboardSwitcher.setKeyboard(attribute, mKeyActivityMap.get(topActivity) );
+        }
+
         switch (attribute.inputType & EditorInfo.TYPE_MASK_CLASS) {
             case EditorInfo.TYPE_CLASS_DATETIME:
                 Log.d(TAG,

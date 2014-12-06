@@ -551,7 +551,7 @@ public class KeyboardSwitcher {
         return nextKeyboardIndex;
     }
 
-    private AnyKeyboard setKeyboard(EditorInfo currentEditorInfo,
+    public AnyKeyboard setKeyboard(EditorInfo currentEditorInfo,
                                     AnyKeyboard current) {
         if (mContext == null)
             return current;
