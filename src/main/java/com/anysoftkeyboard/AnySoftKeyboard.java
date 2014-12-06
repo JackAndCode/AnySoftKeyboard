@@ -16,6 +16,7 @@
 
 package com.anysoftkeyboard;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -102,6 +103,7 @@ import com.menny.android.anysoftkeyboard.FeaturesSet;
 import com.menny.android.anysoftkeyboard.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -516,6 +518,20 @@ public class AnySoftKeyboard extends InputMethodService implements
         }
     }
 
+    Map<String, AnyKeyboard> mKeyActivityMap = new HashMap<>();
+    String mCurrentApp = "";
+    public void writeTask() {
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = activityManager.getRunningTasks(1);
+        String topLevelApp = list.get(0).baseActivity.getPackageName();
+        if(!topLevelApp.equals(mCurrentApp)) {
+            mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+        }
+
+        mCurrentApp = topLevelApp;
+        Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
+    }
+
     @Override
     public void onStartInputView(final EditorInfo attribute,
                                  final boolean restarting) {
@@ -524,6 +540,8 @@ public class AnySoftKeyboard extends InputMethodService implements
                     + ")");
 
         super.onStartInputView(attribute, restarting);
+        writeTask();
+
         if (mVoiceRecognitionTrigger != null) {
             mVoiceRecognitionTrigger.onStartInputView();
         }

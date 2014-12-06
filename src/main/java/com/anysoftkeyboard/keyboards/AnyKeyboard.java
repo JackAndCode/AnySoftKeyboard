@@ -560,6 +560,10 @@ public abstract class AnyKeyboard extends Keyboard {
 
     public abstract String getKeyboardName();
 
+    public String toString() {
+        return getKeyboardName();
+    }
+
     public boolean isLeftToRightLanguage() {
         return !mRightToLeftLayout;
     }
