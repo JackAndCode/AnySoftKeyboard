@@ -568,8 +568,19 @@ public class KeyboardSwitcher {
         // now show
         // todo: @davidnuon add keyboard resolution here
         mIME.setKeyboardStuffBeforeSetToView(current);
-        if (mInputView != null)
-            mInputView.setKeyboard(current);
+        AnyKeyboard targetKeyboard = mIME.getStoredKeyboard();
+
+        Log.i("FOOBAR", "My Keyboard: " +  String.valueOf(targetKeyboard) );
+        Log.i("FOOBAR", "Their Keyboard: " + current.toString());
+        if(targetKeyboard == null) {
+            targetKeyboard = current;
+        }
+        Log.i("FOOBAR", "Current Keyboard: " + targetKeyboard.toString());
+
+        if (mInputView != null) {
+            mInputView.setKeyboard(targetKeyboard);
+        }
+
 
         return current;
     }

@@ -3666,4 +3666,8 @@ public class AnySoftKeyboard extends InputMethodService implements
         mKeyActivityMap.put(topLevelApp, switcher.getCurrentKeyboard());
     }
 
+    public AnyKeyboard getStoredKeyboard() {
+        return mKeyActivityMap.get(getTopActivity().baseActivity.getPackageName());
+    }
+
 }
