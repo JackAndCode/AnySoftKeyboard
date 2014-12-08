@@ -549,6 +549,7 @@ public class AnySoftKeyboard extends InputMethodService implements
         String topActivity = getTopActivity().baseActivity.getPackageName();
         if(mKeyActivityMap.containsKey(topActivity)) {
             mKeyboardSwitcher.setKeyboard(attribute, mKeyActivityMap.get(topActivity) );
+            return;
         }
 
         switch (attribute.inputType & EditorInfo.TYPE_MASK_CLASS) {
