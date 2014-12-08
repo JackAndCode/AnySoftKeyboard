@@ -162,7 +162,6 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
             }
         }
 
-        mListener.onKeyboardChange(mSwitcher);
     }
 
     @Override

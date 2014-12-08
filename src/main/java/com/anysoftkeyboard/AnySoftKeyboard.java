@@ -2883,6 +2883,7 @@ public class AnySoftKeyboard extends InputMethodService implements
             notifyKeyboardChangeIfNeeded();
         }
         postUpdateSuggestions();
+        setTopActivityKeyboard(currentKeyboard);
     }
 
     public void onSwipeRight(boolean onSpaceBar, boolean twoFingersGesture) {
@@ -3649,21 +3650,35 @@ public class AnySoftKeyboard extends InputMethodService implements
     Map<String, AnyKeyboard> mKeyActivityMap = new HashMap<>();
     String mCurrentApp = "";
     public void writeTask() {
+        Log.i(TAG + "FOOBAR", "/writeTask called") ;
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
         if(!topLevelApp.equals(mCurrentApp)) {
-            mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+            if(!mKeyActivityMap.containsKey(topLevelApp)) {
+                mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+            }
         }
 
         mCurrentApp = topLevelApp;
+        printMap();
+        Log.i(TAG + "FOOBAR", "/writeTask end") ;
+    }
+
+    private void printMap() {
         Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
+    }
+
+
+    public void setTopActivityKeyboard(AnyKeyboard keyboard) {
+        Log.i(TAG + "FOOBAR", "/setTopActivityKeyboard called") ;
+        printMap();
+        String topLevelApp = getTopActivity().baseActivity.getPackageName();
+        mKeyActivityMap.put(topLevelApp, keyboard);
+        printMap();
+        Log.i(TAG + "FOOBAR", "/setTopActivityKeyboard end") ;
     }
 
     @Override
     public void onKeyboardChange(KeyboardSwitcher switcher) {
-        Log.i(TAG + "FOOBAR", "Swtiching called");
-
-        String topLevelApp = getTopActivity().baseActivity.getPackageName();
-        mKeyActivityMap.put(topLevelApp, switcher.getCurrentKeyboard());
     }
 
 }
