@@ -570,12 +570,12 @@ public class KeyboardSwitcher {
         mIME.setKeyboardStuffBeforeSetToView(current);
         AnyKeyboard targetKeyboard = mIME.getStoredKeyboard();
 
-        Log.i("FOOBAR", "My Keyboard: " +  String.valueOf(targetKeyboard) );
-        Log.i("FOOBAR", "Their Keyboard: " + current.toString());
+        Log.i("KeyboardSwitcher/setKeyboard()/FOOBAR", "My Keyboard: " +  String.valueOf(targetKeyboard) );
+        Log.i("KeyboardSwitcher/setKeyboard()/FOOBAR", "Their Keyboard: " + current.toString());
         if(targetKeyboard == null) {
             targetKeyboard = current;
         }
-        Log.i("FOOBAR", "Current Keyboard: " + targetKeyboard.toString());
+        Log.i("KeyboardSwitcher/setKeyboard()/FOOBAR", "Current Keyboard: " + targetKeyboard.toString());
 
         if (mInputView != null) {
             mInputView.setKeyboard(targetKeyboard);

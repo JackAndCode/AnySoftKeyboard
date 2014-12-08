@@ -3660,13 +3660,13 @@ public class AnySoftKeyboard extends InputMethodService implements
         }
 
         mCurrentApp = topLevelApp;
-        Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
+        Log.i(TAG + "FOOBAR/CURRENT_STATE", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
     }
 
     @Override
     public void onKeyboardChange(KeyboardSwitcher switcher) {
-        Log.i(TAG + "FOOBAR", "Swtiching called");
-
+        Log.i(TAG + "FOOBAR", "AnySoftKeyboard/onKeyboardChange() Switching called");
+        t
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
         mKeyActivityMap.put(topLevelApp, switcher.getCurrentKeyboard());
     }
