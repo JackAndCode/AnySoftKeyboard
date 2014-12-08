@@ -3656,19 +3656,32 @@ public class AnySoftKeyboard extends InputMethodService implements
     public void writeTask() {
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
         if(!topLevelApp.equals(mCurrentApp)) {
-            mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+            if(!mKeyActivityMap.containsKey(topLevelApp)) {
+                mKeyActivityMap.put(topLevelApp, mKeyboardSwitcher.getCurrentKeyboard());
+            }
         }
 
         mCurrentApp = topLevelApp;
+        printMap();
+    }
+
+    private void printMap() {
         Log.i(TAG + "FOOBAR/CURRENT_STATE", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
     }
 
     @Override
     public void onKeyboardChange(KeyboardSwitcher switcher) {
         Log.i(TAG + "FOOBAR", "AnySoftKeyboard/onKeyboardChange() Switching called");
-        t
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
         mKeyActivityMap.put(topLevelApp, switcher.getCurrentKeyboard());
+    }
+
+    public void setTopActivityKeyboard(AnyKeyboard keyboard) {
+        Log.i(TAG + "FOOBAR", "AnySoftKeyboard/setTopActivityKeyboard() called");
+        printMap();
+        String topLevelApp = getTopActivity().baseActivity.getPackageName();
+        mKeyActivityMap.put(topLevelApp, keyboard);
+        printMap();
     }
 
     public AnyKeyboard getStoredKeyboard() {

@@ -162,7 +162,6 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
             }
         }
 
-        mListener.onKeyboardChange(mSwitcher);
     }
 
     @Override
@@ -192,13 +191,14 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
     final protected boolean isFirstDownEventInsideSpaceBar() {
         return mIsFirstDownEventInsideSpaceBar;
     }
-/*
-    public void simulateLongPress(int keyCode) {
-        Key key = findKeyByKeyCode(keyCode);
-        if (key != null)
-            super.onLongPress(getKeyboard().getKeyboardContext(), key, false, true);
-    }
-*/
+
+    /*
+        public void simulateLongPress(int keyCode) {
+            Key key = findKeyByKeyCode(keyCode);
+            if (key != null)
+                super.onLongPress(getKeyboard().getKeyboardContext(), key, false, true);
+        }
+    */
     private boolean invokeOnKey(int primaryCode, Key key, int multiTapIndex) {
         getOnKeyboardActionListener().onKey(primaryCode, key, multiTapIndex,
                 null, false);
@@ -261,7 +261,7 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
 
     @Override
     public boolean onTouchEvent(MotionEvent me) {
-        Log.d(TAG, "onTouchEvent with "+me.getPointerCount()+" points");
+        Log.d(TAG, "onTouchEvent with " + me.getPointerCount() + " points");
         if (getKeyboard() == null)//I mean, if there isn't any keyboard I'm handling, what's the point?
             return false;
 
@@ -272,7 +272,7 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
             mFirstTouchPont.x = (int) me.getX();
             mFirstTouchPont.y = (int) me.getY();
             mIsFirstDownEventInsideSpaceBar =
-		            mSpaceBarKey != null && mSpaceBarKey.isInside(mFirstTouchPont.x, mFirstTouchPont.y);
+                    mSpaceBarKey != null && mSpaceBarKey.isInside(mFirstTouchPont.x, mFirstTouchPont.y);
         } else if (mIsFirstDownEventInsideSpaceBar) {
             if (me.getAction() == MotionEvent.ACTION_MOVE) {
                 setGesturePreviewText(mSwitcher, me);
@@ -412,11 +412,11 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
             switch (swipeKeyTarget) {
                 case KeyCodes.MODE_ALPHABET:
                     // printing the next alpha keyboard name
-                    tooltip = switcher!=null? switcher.peekNextAlphabetKeyboard() : "";
+                    tooltip = switcher != null ? switcher.peekNextAlphabetKeyboard() : "";
                     break;
                 case KeyCodes.MODE_SYMOBLS:
                     // printing the next alpha keyboard name
-                    tooltip = switcher!=null? switcher.peekNextSymbolsKeyboard() : "";
+                    tooltip = switcher != null ? switcher.peekNextSymbolsKeyboard() : "";
                     break;
                 default:
                     tooltip = "";
@@ -632,3 +632,4 @@ public class AnyKeyboardView extends AnyKeyboardBaseView {
         this.mListener = mListener;
     }
 }
+

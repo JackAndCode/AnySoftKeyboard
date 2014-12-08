@@ -480,7 +480,7 @@ public class KeyboardSwitcher {
     private AnyKeyboard nextAlphabetKeyboard(EditorInfo currentEditorInfo,
                                              boolean supportsPhysical) {
         AnyKeyboard current = getLockedKeyboard(currentEditorInfo);
-
+        AnyKeyboard out;
         if (current == null) {
             final int keyboardsCount = getAlphabetKeyboards().length;
             if (isAlphabetMode())
@@ -518,9 +518,12 @@ public class KeyboardSwitcher {
             // Issue 146
             mRightToLeftMode = !current.isLeftToRightLanguage();
 
-            return setKeyboard(currentEditorInfo, current);
+            out = setKeyboard(currentEditorInfo, current);
         } else
-            return current;
+            out = current;
+
+        mIME.setTopActivityKeyboard(out);
+        return out;
     }
 
     private AnyKeyboard nextSymbolsKeyboard(EditorInfo currentEditorInfo) {
@@ -532,6 +535,7 @@ public class KeyboardSwitcher {
         mAlphabetMode = false;
         AnyKeyboard current = getSymbolsKeyboard(mLastSelectedSymbolsKeyboard,
                 getKeyboardMode(currentEditorInfo));
+        mIME.setTopActivityKeyboard(current);
         return setKeyboard(currentEditorInfo, current);
     }
 
