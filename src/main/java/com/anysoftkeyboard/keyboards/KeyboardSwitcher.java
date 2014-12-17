@@ -208,7 +208,7 @@ public class KeyboardSwitcher {
         return keyboard;
     }
 
-    private AnyKeyboard[] getAlphabetKeyboards() {
+    public AnyKeyboard[] getAlphabetKeyboards() {
         makeKeyboards(false);
         return mAlphabetKeyboards;
     }
@@ -762,4 +762,6 @@ public class KeyboardSwitcher {
                 && AnyApplication.getConfig()
                 .shouldShowPopupForLanguageSwitch();
     }
+
+
 }

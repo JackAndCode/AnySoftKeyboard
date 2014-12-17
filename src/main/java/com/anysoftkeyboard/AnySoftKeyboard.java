@@ -3656,8 +3656,27 @@ public class AnySoftKeyboard extends InputMethodService implements
     }
 
     Map<String, AnyKeyboard> mKeyActivityMap = new HashMap<>();
+    Map<String, AnyKeyboard> mLanguageBase = new HashMap<>();
     String mCurrentApp = "";
+    int mSet = 0;
     public void writeTask() {
+
+        if(mSet != 2) {
+                AnyKeyboard keyboard = mKeyboardSwitcher.getCurrentKeyboard();
+                if(keyboard.toString().equals("English")) {
+                    mLanguageBase.put("EN", keyboard);
+                    mSet = mSet + 1;
+
+                }
+
+                if(keyboard.toString().equals("AZERTY")) {
+                    mLanguageBase.put("FR", keyboard);
+                    mSet = mSet + 1;
+                }
+        }
+
+        Log.i(TAG + "FOOBAR/JACKFROST", Arrays.toString(mLanguageBase.entrySet().toArray() ));
+
         Log.i(TAG + "FOOBAR", "/writeTask called") ;
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
         if(!topLevelApp.equals(mCurrentApp)) {
