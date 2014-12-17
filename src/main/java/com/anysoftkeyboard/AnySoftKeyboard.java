@@ -18,9 +18,11 @@ package com.anysoftkeyboard;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -100,6 +102,7 @@ import com.anysoftkeyboard.voice.VoiceInput;
 import com.menny.android.anysoftkeyboard.AnyApplication;
 import com.menny.android.anysoftkeyboard.BuildConfig;
 import com.menny.android.anysoftkeyboard.FeaturesSet;
+import com.menny.android.anysoftkeyboard.LanguageListenerService;
 import com.menny.android.anysoftkeyboard.R;
 
 import java.util.ArrayList;
@@ -3661,21 +3664,8 @@ public class AnySoftKeyboard extends InputMethodService implements
     int mSet = 0;
     public void writeTask() {
 
-        if(mSet != 2) {
-                AnyKeyboard keyboard = mKeyboardSwitcher.getCurrentKeyboard();
-                if(keyboard.toString().equals("English")) {
-                    mLanguageBase.put("EN", keyboard);
-                    mSet = mSet + 1;
 
-                }
 
-                if(keyboard.toString().equals("AZERTY")) {
-                    mLanguageBase.put("FR", keyboard);
-                    mSet = mSet + 1;
-                }
-        }
-
-        Log.i(TAG + "FOOBAR/JACKFROST", Arrays.toString(mLanguageBase.entrySet().toArray() ));
 
         Log.i(TAG + "FOOBAR", "/writeTask called") ;
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
@@ -3690,6 +3680,32 @@ public class AnySoftKeyboard extends InputMethodService implements
         Log.i(TAG + "FOOBAR", "/writeTask end") ;
     }
 
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(LanguageListenerService.CHANGE_LANGUAGE);
+        registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        unregisterReceiver(mReceiver);
+        return super.onUnbind(intent);
+    }
+
+    LanguageReceiver mReceiver = new LanguageReceiver();
+    class LanguageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(LanguageListenerService.CHANGE_LANGUAGE)) {
+                Log.i(TAG + "FOOBAR/OLAF", "Got language change" );
+            }
+        }
+    }
+
+
     private void printMap() {
         Log.i(TAG + "FOOBAR", Arrays.toString(mKeyActivityMap.entrySet().toArray()));
     }
@@ -3702,10 +3718,25 @@ public class AnySoftKeyboard extends InputMethodService implements
         mKeyActivityMap.put(topLevelApp, keyboard);
         printMap();
         Log.i(TAG + "FOOBAR", "/setTopActivityKeyboard end") ;
+        Log.i(TAG + "FOOBAR/JACKFROST", Arrays.toString(mLanguageBase.entrySet().toArray() ));
+
+        if(mSet != 2) {
+            if(keyboard.toString().equals("English")) {
+                mLanguageBase.put("EN", keyboard);
+                mSet = mSet + 1;
+
+            }
+
+            if(keyboard.toString().equals("AZERTY")) {
+                mLanguageBase.put("FR", keyboard);
+                mSet = mSet + 1;
+            }
+        }
     }
 
     @Override
     public void onKeyboardChange(KeyboardSwitcher switcher) {
     }
+
 
 }

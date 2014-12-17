@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.menny.android.anysoftkeyboard">
+    package="com.menny.android.anysoftkeyboard" >
 
     <uses-permission android:name="android.permission.GET_TASKS" />
 
@@ -8,24 +9,24 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
-        android:xlargeScreens="true"/>
+        android:xlargeScreens="true" />
     <!-- http://d.android.com/guide/practices/screens_support.html read about legacy. -->
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- required for the user dictionary (long press a word in the suggestions bar) -->
-    <uses-permission android:name="android.permission.READ_USER_DICTIONARY"/>
-    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY"/>
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
     <!-- REQUIRED FOR THE CONTACTS DICTIONARY -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- REQUIRED BACKUP TO/RESTORE FROM SDCARD -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- currently, only support touch screens -->
-    <uses-configuration android:reqTouchScreen="finger"/>
-    <uses-configuration android:reqTouchScreen="stylus"/>
+    <uses-configuration android:reqTouchScreen="finger" />
+    <uses-configuration android:reqTouchScreen="stylus" />
 
     <application
-        android:name=".AnyApplication"
+        android:name="com.menny.android.anysoftkeyboard.AnyApplication"
         android:allowBackup="true"
         android:backupAgent="com.anysoftkeyboard.backup.AnyBackupAgent"
         android:hardwareAccelerated="true"
@@ -33,24 +34,24 @@
         android:installLocation="internalOnly"
         android:label="@string/ime_name"
         android:restoreAnyVersion="true"
-        android:theme="@style/Theme.AskApp">
+        android:theme="@style/Theme.AskApp" >
 
         <!-- used to backup the settings and SQL to the cloud -->
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAILlrSpiqigog3iJt3BwYxzNXMUzqgGV_dJ1EPDQ"/>
+            android:value="AEdPqrEAAAAILlrSpiqigog3iJt3BwYxzNXMUzqgGV_dJ1EPDQ" />
 
         <!-- this is the IME with the pointer to the settings ui (xml/method) -->
         <service
-            android:name=".SoftKeyboard"
-            android:permission="android.permission.BIND_INPUT_METHOD">
+            android:name="com.menny.android.anysoftkeyboard.SoftKeyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD" >
             <intent-filter>
-                <action android:name="android.view.InputMethod"/>
+                <action android:name="android.view.InputMethod" />
             </intent-filter>
 
             <meta-data
                 android:name="android.view.im"
-                android:resource="@xml/method"/>
+                android:resource="@xml/method" />
         </service>
         <!--
         Not ready for prime-time
@@ -64,40 +65,45 @@
         </service>
         -->
 
+
         <!-- ui activities -->
         <!-- settings ui activities -->
-        <!-- this is ajust a proxy activit, it does nothing but direct to the actual setting ativity
-        I use this, so I can 'disable' this activity at runtime, and so remove ASK from the launcher's icons -->
-        <activity android:theme="@style/Theme.AskApp"
+        <!--
+        this is ajust a proxy activit, it does nothing but direct to the actual setting ativity
+        I use this, so I can 'disable' this activity at runtime, and so remove ASK from the launcher's icons
+        -->
+        <activity
             android:name="com.menny.android.anysoftkeyboard.LauncherSettingsActivity"
             android:icon="@drawable/ic_launcher_settings"
+            android:label="@string/ime_name"
             android:launchMode="singleTop"
-            android:label="@string/ime_name">
+            android:theme="@style/Theme.AskApp" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:theme="@style/Theme.AskApp"
+        <activity
             android:name="com.anysoftkeyboard.ui.settings.MainSettingsActivity"
             android:icon="@drawable/ic_launcher_settings"
+            android:label="@string/ime_name"
             android:launchMode="singleTask"
-            android:label="@string/ime_name">
+            android:theme="@style/Theme.AskApp" >
         </activity>
-
         <activity
             android:name="com.anysoftkeyboard.ui.tutorials.TestersNoticeActivity"
             android:icon="@drawable/ic_launcher"
             android:label="@string/testers_version"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AskApp.Popup">
+            android:theme="@style/Theme.AskApp.Popup" >
         </activity>
         <!-- ui when a crash happens -->
-        <activity android:theme="@style/Theme.AskApp.NoTitle"
+        <activity
             android:name="com.anysoftkeyboard.ui.SendBugReportUiActivity"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/ime_name">
+            android:label="@string/ime_name"
+            android:theme="@style/Theme.AskApp.NoTitle" >
         </activity>
         <!--
          <activity android:name="com.anysoftkeyboard.ui.settings.SpellCheckerSettingsActivity"
@@ -110,9 +116,9 @@
             android:name="com.anysoftkeyboard.voice.VoiceInputNotInstalledActivity"
             android:icon="@drawable/ic_launcher"
             android:label="@string/ime_name"
-            android:theme="@style/Theme.AskApp.Popup.NoTitle"/>
+            android:theme="@style/Theme.AskApp.Popup.NoTitle" />
 
-        <service android:name="com.anysoftkeyboard.voice.ServiceHelper"/>
+        <service android:name="com.anysoftkeyboard.voice.ServiceHelper" />
 
         <activity
             android:name="com.anysoftkeyboard.voice.ActivityHelper"
@@ -121,7 +127,16 @@
             android:finishOnTaskLaunch="true"
             android:icon="@drawable/ic_launcher"
             android:theme="@style/Theme.AskApp.Popup.NoTitle"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <service
+            android:name="com.menny.android.anysoftkeyboard.LanguageListenerService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.dnuon.GET_CHANGELANG" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
