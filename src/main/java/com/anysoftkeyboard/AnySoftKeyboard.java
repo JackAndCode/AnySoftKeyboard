@@ -232,6 +232,7 @@ public class AnySoftKeyboard extends InputMethodService implements
 
     public AnySoftKeyboard() {
         mConfig = AnyApplication.getConfig();
+        currentInstance = this;
     }
 
     @Override
@@ -3690,15 +3691,29 @@ public class AnySoftKeyboard extends InputMethodService implements
 
     @Override
     public boolean onUnbind(Intent intent) {
-        unregisterReceiver(mReceiver);
         return super.onUnbind(intent);
     }
 
+    public static AnySoftKeyboard currentInstance;
+
     LanguageReceiver mReceiver = new LanguageReceiver();
+
+    String currentBias = "EN";
+    public void changeLanguageBias(String language) {
+        currentBias = language;
+        Log.i("FOOBAR/OLAF/ANNA", "changeLanguageBias invoked " + language );
+    }
+
     class LanguageReceiver extends BroadcastReceiver {
+        public LanguageReceiver() {
+            Log.i(TAG + "FOOBAR/OLAF", "Staring up Language Receiver" );
+
+        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.i(TAG + "FOOBAR/OLAF", "Let it go." );
             if(action.equals(LanguageListenerService.CHANGE_LANGUAGE)) {
                 Log.i(TAG + "FOOBAR/OLAF", "Got language change" );
             }

@@ -137,6 +137,14 @@
             </intent-filter>
         </service>
 
+        <receiver
+            android:name="com.menny.android.anysoftkeyboard.LanguageListenerReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="davidnuon.changelang" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
