@@ -3701,6 +3701,16 @@ public class AnySoftKeyboard extends InputMethodService implements
     String currentBias = "EN";
     public void changeLanguageBias(String language) {
         currentBias = language;
+        String chatApp = "com.davidnuon.canadaonline";
+        if(mKeyActivityMap.containsKey(chatApp)) {
+            if(mLanguageBase.containsKey(currentBias)) {
+                AnyKeyboard keyboard = mLanguageBase.get(currentBias);
+                mKeyActivityMap.put(chatApp, keyboard);
+                Log.i("FOOBAR/OLAF", "Correct Bias");
+            }
+            Log.i("FOOBAR/OLAF", "CAAANADA ");
+        }
+
         Log.i("FOOBAR/OLAF/ANNA", "changeLanguageBias invoked " + language );
     }
 
@@ -3730,6 +3740,8 @@ public class AnySoftKeyboard extends InputMethodService implements
         Log.i(TAG + "FOOBAR", "/setTopActivityKeyboard called") ;
         printMap();
         String topLevelApp = getTopActivity().baseActivity.getPackageName();
+
+
         mKeyActivityMap.put(topLevelApp, keyboard);
         printMap();
         Log.i(TAG + "FOOBAR", "/setTopActivityKeyboard end") ;
